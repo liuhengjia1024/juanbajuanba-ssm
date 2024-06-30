@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.MaterialMapper">
+    <resultMap id="materialBeanMapper" type="com.liuhengjia.model.MaterialBean">
+        <result column="id" property="material.id"/>
+        <result column="course_id" property="material.courseId"/>
+        <result column="material_name" property="material.name"/>
+        <result column="download_path" property="material.downloadPath"/>
+        <result column="download_number" property="material.downloadNumber"/>
+        <result column="create_time" property="material.createTime"/>
+    </resultMap>
+    <resultMap id="materialMapper" type="com.liuhengjia.entity.Material">
+        <result column="id" property="id"/>
+        <result column="course_id" property="courseId"/>
+        <result column="material_name" property="name"/>
+        <result column="download_path" property="downloadPath"/>
+        <result column="download_number" property="downloadNumber"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Material">
+        INSERT INTO material (id, course_id, material_name, download_path, download_number, create_time)
+        VALUES (#{id}, #{courseId}, #{name}, #{downloadPath}, #{downloadNumber}, #{createTime})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE
+        FROM material
+        WHERE id = #{materialId}
+    </delete>
+    <update id="updateDownloadNumById" parameterType="java.lang.Integer">
+        UPDATE material
+        SET download_number = download_number + 1
+        WHERE id = #{materialId}
+    </update>
+    <select id="selectAll" resultMap="materialBeanMapper">
+        SELECT *
+        FROM material
+    </select>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="materialMapper">
+        SELECT *
+        FROM material
+        WHERE id = #{materialId}
+    </select>
+    <select id="selectByCourseId" parameterType="java.lang.Integer" resultMap="materialMapper">
+        SELECT *
+        FROM material
+        WHERE course_id = #{courseId}
+    </select>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.ReviewMapper">
+    <resultMap id="reviewMap" type="com.liuhengjia.entity.Review">
+        <result column="id" property="id"/>
+        <result column="subscription_id" property="subscriptionId"/>
+        <result column="rate" property="rate"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <resultMap id="studentReviewBeanMap" type="com.liuhengjia.model.StudentReviewBean">
+        <result column="id" property="review.id"/>
+        <result column="subscription_id" property="review.subscriptionId"/>
+        <result column="rate" property="review.rate"/>
+        <result column="content" property="review.content"/>
+        <result column="create_time" property="review.createTime"/>
+    </resultMap>
+    <resultMap id="administratorReviewBeanMap" type="com.liuhengjia.model.AdministratorReviewBean">
+        <result column="id" property="review.id"/>
+        <result column="subscription_id" property="review.subscriptionId"/>
+        <result column="rate" property="review.rate"/>
+        <result column="content" property="review.content"/>
+        <result column="create_time" property="review.createTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Review">
+        INSERT INTO review
+        VALUES (#{id}, #{subscriptionId}, #{rate}, #{content}, #{createTime})
+    </insert>
+    <delete id="deleteReviewById" parameterType="java.lang.Integer">
+        DELETE
+        FROM review
+        WHERE id = #{reviewId}
+    </delete>
+    <select id="selectOne" parameterType="java.lang.Integer" resultMap="reviewMap">
+        SELECT *
+        FROM review
+        WHERE subscription_id = #{subscriptionId}
+    </select>
+    <select id="selectAdministratorReviewBeanList" resultMap="administratorReviewBeanMap">
+        SELECT *
+        FROM review
+    </select>
+    <select id="selectStudentReviewBeanList" parameterType="java.util.List" resultMap="studentReviewBeanMap">
+        SELECT *
+        FROM review
+        WHERE subscription_id
+        IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

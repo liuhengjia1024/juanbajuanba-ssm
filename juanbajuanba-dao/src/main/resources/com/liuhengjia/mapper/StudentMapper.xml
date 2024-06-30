@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.StudentMapper">
+    <resultMap id="studentMap" type="com.liuhengjia.entity.Student">
+        <result column="id" property="id"/>
+        <result column="email" property="email"/>
+        <result column="pwd" property="password"/>
+        <result column="avatar_path" property="avatarPath"/>
+        <result column="nickname" property="nickname"/>
+        <result column="real_name" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="personal_signature" property="personalSignature"/>
+        <result column="status_code" property="statusCode"/>
+        <result column="verification_code" property="verificationCode"/>
+        <result column="join_date" property="joinDate"/>
+    </resultMap>
+    <insert id="insertSignUp" parameterType="com.liuhengjia.entity.Student">
+        INSERT INTO student (id, email, pwd, avatar_path, nickname, status_code, verification_code, join_date)
+        VALUES (#{id}, #{email}, #{password}, #{avatarPath}, #{nickname}, #{statusCode}, #{verificationCode},
+                #{joinDate})
+    </insert>
+    <update id="updatePassword" parameterType="java.lang.String">
+        UPDATE student
+        SET pwd = #{param2}
+        WHERE verification_code = #{param1}
+    </update>
+    <update id="updateStatusCode" parameterType="java.lang.String">
+        UPDATE student
+        SET status_code = 'Y'
+        WHERE verification_code = #{verificationCode}
+    </update>
+    <update id="updateStatusCodeByStudentId" parameterType="java.lang.Integer">
+        UPDATE student
+        SET status_code = 'Y'
+        WHERE id = #{studentId}
+    </update>
+    <update id="updateVerificationCode" parameterType="java.lang.Object">
+        UPDATE student
+        SET verification_code = #{param2}
+        WHERE id = #{param1}
+    </update>
+    <update id="updateOne" parameterType="com.liuhengjia.entity.Student">
+        UPDATE student
+        SET nickname = #{nickname},
+            email = #{email},
+            real_name = #{realName},
+            avatar_path = #{avatarPath},
+            sex = #{sex},
+            personal_signature = #{personalSignature}
+        WHERE id = #{id}
+    </update>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="studentMap">
+        SELECT *
+        FROM student
+        WHERE id = #{studentId}
+    </select>
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM student
+    </select>
+    <select id="selectSignIn" parameterType="com.liuhengjia.entity.Student" resultMap="studentMap">
+        SELECT *
+        FROM student
+        WHERE email = #{email}
+          AND pwd = #{password}
+    </select>
+    <select id="selectStudentExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM student
+        WHERE email = #{email}
+    </select>
+    <select id="selectAll" resultMap="studentMap">
+        SELECT *
+        FROM student
+    </select>
+</mapper>

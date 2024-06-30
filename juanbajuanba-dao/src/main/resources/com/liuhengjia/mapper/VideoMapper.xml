@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.VideoMapper">
+    <resultMap id="videoBeanMapper" type="com.liuhengjia.model.VideoBean">
+        <result column="id" property="video.id"/>
+        <result column="course_id" property="video.courseId"/>
+        <result column="video_name" property="video.name"/>
+        <result column="video_path" property="video.videoPath"/>
+        <result column="view_number" property="video.viewNumber"/>
+        <result column="create_time" property="video.createTime"/>
+    </resultMap>
+    <resultMap id="videoMapper" type="com.liuhengjia.entity.Video">
+        <result column="id" property="id"/>
+        <result column="course_id" property="courseId"/>
+        <result column="video_name" property="name"/>
+        <result column="video_path" property="videoPath"/>
+        <result column="view_number" property="viewNumber"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Video">
+        INSERT INTO video (id, course_id, video_name, video_path, view_number, create_time)
+        VALUES (#{id}, #{courseId}, #{name}, #{videoPath}, #{viewNumber}, #{createTime})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE
+        FROM video
+        WHERE id = #{videoId}
+    </delete>
+    <select id="selectAll" resultMap="videoBeanMapper">
+        SELECT *
+        FROM video
+    </select>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="videoMapper">
+        SELECT *
+        FROM video
+        WHERE id = #{videoId}
+    </select>
+    <select id="selectByCourseId" parameterType="java.lang.Integer" resultMap="videoMapper">
+        SELECT *
+        FROM video
+        WHERE course_id = #{courseId}
+    </select>
+</mapper>

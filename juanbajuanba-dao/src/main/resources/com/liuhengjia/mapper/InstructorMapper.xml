@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.InstructorMapper">
+    <resultMap id="instructorMap" type="com.liuhengjia.entity.Instructor">
+        <result column="id" property="id"/>
+        <result column="email" property="email"/>
+        <result column="avatar_path" property="avatarPath"/>
+        <result column="real_name" property="realName"/>
+        <result column="description" property="description"/>
+        <result column="join_date" property="joinDate"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Instructor">
+        INSERT INTO instructor
+        VALUES (#{id}, #{email}, #{avatarPath}, #{realName}, #{description}, #{joinDate})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE
+        FROM instructor
+        WHERE id = #{instructorId}
+    </delete>
+    <update id="updateOne" parameterType="com.liuhengjia.entity.Instructor">
+        UPDATE instructor
+        SET email       = #{email},
+            avatar_path = #{avatarPath},
+            real_name   = #{realName},
+            description = #{description}
+        WHERE id = #{id}
+    </update>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="instructorMap">
+        SELECT *
+        FROM instructor
+        WHERE id = #{instructorId}
+    </select>
+    <select id="selectAll" resultMap="instructorMap">
+        SELECT *
+        FROM instructor
+    </select>
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM instructor
+    </select>
+</mapper>

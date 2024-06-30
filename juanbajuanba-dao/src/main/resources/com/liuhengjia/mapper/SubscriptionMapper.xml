@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.SubscriptionMapper">
+    <resultMap id="subscriptionMap" type="com.liuhengjia.entity.Subscription">
+        <result column="id" property="id"/>
+        <result column="course_id" property="courseId"/>
+        <result column="student_id" property="studentId"/>
+        <result column="is_reviewed" property="isReview"/>
+        <result column="subscription_time" property="subscriptionTime"/>
+    </resultMap>
+    <resultMap id="subscriptionBeanMap" type="com.liuhengjia.model.SubscriptionBean">
+        <result column="id" property="subscription.id"/>
+        <result column="course_id" property="subscription.courseId"/>
+        <result column="student_id" property="subscription.studentId"/>
+        <result column="is_reviewed" property="subscription.isReview"/>
+        <result column="subscription_time" property="subscription.subscriptionTime"/>
+    </resultMap>
+    <resultMap id="administratorSubscriptionBeanMap" type="com.liuhengjia.model.AdministratorSubscriptionBean">
+        <result column="id" property="subscription.id"/>
+        <result column="course_id" property="subscription.courseId"/>
+        <result column="student_id" property="subscription.studentId"/>
+        <result column="is_reviewed" property="subscription.isReview"/>
+        <result column="subscription_time" property="subscription.subscriptionTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Subscription">
+        INSERT INTO subscription (id, course_id, student_id, is_reviewed, subscription_time)
+        VALUES (#{id}, #{courseId}, #{studentId}, #{isReview}, #{subscriptionTime})
+    </insert>
+    <delete id="deleteSubscriptionById" parameterType="java.lang.Integer">
+        DELETE
+        FROM subscription
+        WHERE id =
+              #{subscriptionId}
+    </delete>
+    <select id="selectOne" resultMap="subscriptionMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM subscription
+        WHERE course_id = #{courseId}
+          AND student_id = #{studentId}
+    </select>
+    <select id="selectOneById" resultMap="subscriptionMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM subscription
+        WHERE id = #{subscriptionId}
+    </select>
+    <select id="selectByCourseId" resultMap="subscriptionMap" parameterType="java.lang.Integer">
+        SELECT *
+        FROM subscription
+        WHERE course_id = #{courseId}
+    </select>
+    <select id="selectAdministratorSubscriptionBeanList" resultMap="administratorSubscriptionBeanMap">
+        SELECT *
+        FROM subscription
+    </select>
+    <select id="selectByAccount" resultMap="subscriptionBeanMap">
+        SELECT *
+        FROM subscription
+        WHERE student_id = #{studentId}
+    </select>
+</mapper>

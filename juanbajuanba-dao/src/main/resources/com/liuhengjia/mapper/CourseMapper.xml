@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.CourseMapper">
+    <resultMap id="administratorCourseBeanMap" type="com.liuhengjia.model.CourseBean">
+        <result column="id" property="course.id"/>
+        <result column="category_id" property="course.categoryId"/>
+        <result column="instructor_id" property="course.instructorId"/>
+        <result column="course_name" property="course.name"/>
+        <result column="img_path" property="course.imgPath"/>
+        <result column="create_time" property="course.createTime"/>
+    </resultMap>
+    <resultMap id="studentCourseBeanMap" type="com.liuhengjia.model.StudentCourseBean">
+        <result column="id" property="course.id"/>
+        <result column="category_id" property="course.categoryId"/>
+        <result column="instructor_id" property="course.instructorId"/>
+        <result column="course_name" property="course.name"/>
+        <result column="img_path" property="course.imgPath"/>
+        <result column="create_time" property="course.createTime"/>
+    </resultMap>
+    <resultMap id="courseMap" type="com.liuhengjia.entity.Course">
+        <result column="id" property="id"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="instructor_id" property="instructorId"/>
+        <result column="course_name" property="name"/>
+        <result column="img_path" property="imgPath"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Course">
+        INSERT INTO course
+        VALUES (#{id}, #{categoryId}, #{instructorId}, #{name}, #{imgPath}, #{createTime})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE
+        FROM course
+        WHERE id = #{courseId}
+    </delete>
+    <update id="updateOne" parameterType="com.liuhengjia.entity.Course">
+        UPDATE course
+        SET category_id   = #{categoryId},
+            instructor_id = #{instructorId},
+            course_name   = #{name},
+            img_path      = #{imgPath}
+        WHERE id = #{id}
+    </update>
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="courseMap">
+        SELECT *
+        FROM course
+        WHERE id = #{id}
+    </select>
+    <select id="selectAll" resultMap="courseMap">
+        SELECT *
+        FROM course
+    </select>
+    <select id="selectCountByCategoryId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM course
+        WHERE category_id = #{categoryId}
+    </select>
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM course
+    </select>
+    <select id="selectAllAdministratorCourseBean" resultMap="administratorCourseBeanMap">
+        SELECT *
+        FROM course
+    </select>
+    <select id="selectAllStudentCourseBean" resultMap="studentCourseBeanMap">
+        SELECT *
+        FROM course
+    </select>
+    <select id="selectByCategoryStudentCourseBean" parameterType="java.lang.Integer" resultMap="studentCourseBeanMap">
+        SELECT *
+        FROM course
+        WHERE category_id = #{categoryId}
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liuhengjia.mapper.NoticeMapper">
+    <resultMap id="noticeMap" type="com.liuhengjia.entity.Notice">
+        <result column="id" property="id"/>
+        <result column="administrator_id" property="administratorId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <resultMap id="noticeBeanMap" type="com.liuhengjia.model.NoticeBean">
+        <result column="id" property="notice.id"/>
+        <result column="administrator_id" property="notice.administratorId"/>
+        <result column="title" property="notice.title"/>
+        <result column="content" property="notice.content"/>
+        <result column="create_time" property="notice.createTime"/>
+    </resultMap>
+    <insert id="insertOne" parameterType="com.liuhengjia.entity.Notice">
+        INSERT INTO notice
+        VALUES (#{id}, #{administratorId}, #{title}, #{content}, #{createTime})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE
+        FROM notice
+        WHERE id = #{noticeId}
+    </delete>
+    <select id="selectAll" resultMap="noticeBeanMap">
+        SELECT *
+        FROM notice
+    </select>
+</mapper>
